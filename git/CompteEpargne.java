@@ -39,9 +39,9 @@ public class CompteEpargne extends Compte {
     public void retrait(double montant) {
            if (montant > 0 && solde >= montant) {
             this.solde -= montant;
-            int numeroOperation;
-            operations.add(new Retrait(numeroOperation, new Date(), -montant));
-            numeroOperation++;
+            int numeroOperation=0;
+            operations.add(new Retrait(numeroOperation++, new Date(), -montant));
+            
         }
     else{
         throw new UnsupportedOperationException("Unimplemented method 'effectuerRetrait'");}}

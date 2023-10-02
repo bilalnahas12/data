@@ -38,9 +38,9 @@ public class CompteCourant extends Compte {
     public void retrait(double montant) {
         if (montant > 0 && solde - montant >= -decouvert) {
             this.solde -= montant;
-            int numero;
-            operations.add(new Retrait(numero, new Date(), -montant));
-            numero++;
+            int numero=0;
+            operations.add(new Retrait(numero++, new Date(), -montant));
+            
         }
     else{
         throw new UnsupportedOperationException("Unimplemented method 'effectuerRetrait'");}
