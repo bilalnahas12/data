@@ -34,13 +34,16 @@ public abstract class Compte {
     public double getSolde() {
         return solde;
     }
+    public void  Versement(double m,Compte c){
+        
+    }
 
     public List<Operations> getOperations() {
         return operations;
     }
     public void enregistrerHistorique(String nomClient) {
         try {
-            FileWriter writer = new FileWriter(nomClient + ".txt");
+            FileWriter writer = new FileWriter(nomClient + "c.txt");
             List<Operations> operations = getOperations();
             for (Operations operation : operations) {
                 writer.write(operation.toString() + "\n");
