@@ -10,29 +10,19 @@ import git.operations.Versement;
 public class CompteEpargne extends Compte {
     private double tauxInteret;
 
-    public CompteEpargne(String code, double solde, StatutDeCompte statut, double tauxInteret) {
-        super(code, solde, statut);
+    public CompteEpargne(double tauxInteret) {
+        super();
         this.tauxInteret = tauxInteret;
     }
 
-    @Override
-    public void effectuerOperation(Operations operation) {
-        if (operation instanceof Retrait) {
-            Retrait retrait = (Retrait) operation;
-            double montantRetrait = retrait.getMontant();
-            if (montantRetrait > 0 && super.getSolde() >= montantRetrait) {
-                super.solde -= montantRetrait;
-                super.getOperations().add(operation);
-            } 
-        } else if (operation instanceof Versement) {
-            super.solde += operation.getMontant();
-            super.getOperations().add(operation);
-        }
-    }
 
     @Override
-    public void verser(double montant) {
-        throw new UnsupportedOperationException("Unimplemented method 'effectuerVersement'");
+    public void verser(double mt) throws Exception {
+        if(mt<100)throw new Exception("vous ne pouvez pas saisir ce montant");
+        this.solde+=mt;
+          operations.add(new Versement( new Date(), mt));
+
+        
     }
 
     @Override
@@ -40,7 +30,7 @@ public class CompteEpargne extends Compte {
            if (montant > 0 && solde >= montant) {
             this.solde -= montant;
             int numeroOperation=0;
-            operations.add(new Retrait(numeroOperation++, new Date(), -montant));
+            operations.add(new Retrait( new Date(), montant));
             
         }
     else{
@@ -49,8 +39,7 @@ public class CompteEpargne extends Compte {
 
     @Override
     public void calculerInterets() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'calculerInterets'");
+      solde*=1+tauxInteret/100;
     }
 
   

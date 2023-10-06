@@ -9,29 +9,20 @@ import git.operations.Versement;
 public class CompteCourant extends Compte {
     private double decouvert;
 
-    public CompteCourant(String code, double solde, StatutDeCompte statut, double decouvert) {
-        super(code, solde, statut);
+    public CompteCourant(double decouvert) {
+        super();
         this.decouvert = decouvert;
     }
 
+  
+ 
     @Override
-    public void effectuerOperation(Operations operation) {
-        if (operation instanceof Retrait) {
-            Retrait retrait = (Retrait) operation;
-            double montantRetrait = retrait.getMontant();
-            if (montantRetrait > 0 && super.getSolde() - montantRetrait >= -decouvert) {
-                super.solde -= montantRetrait;
-                super.getOperations().add(operation);
-            }
-        } else if (operation instanceof Versement) {
-            super.solde += operation.getMontant();
-            super.getOperations().add(operation);
-        }
-    }
+    public void verser(double mt) throws Exception {
+        if(mt<100)throw new Exception("vous ne pouvez pas saisir ce montant");
+        this.solde+=mt;
+          operations.add(new Versement( new Date(), mt));
 
-    @Override
-    public void  verser(double montant) {
-        throw new UnsupportedOperationException("Unimplemented method 'effectuerVersement'");
+        
     }
 
     @Override
@@ -39,7 +30,7 @@ public class CompteCourant extends Compte {
         if (montant > 0 && solde - montant >= -decouvert) {
             this.solde -= montant;
             int numero=0;
-            operations.add(new Retrait(numero++, new Date(), -montant));
+            operations.add(new Retrait( new Date(), montant));
             
         }
     else{
